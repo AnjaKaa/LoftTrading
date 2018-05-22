@@ -18,6 +18,7 @@ import {
 } from '../../ducks/currency';
 import styled from 'styled-components';
 
+//#region styles
 const TradeChartButtons = styled.div`
   display: flex;
   justify-content: flex-end;
@@ -74,6 +75,7 @@ class TradeChart extends Component {
     inputPurchase: 0,
     currentOffset: '4h',
   };
+  //#endregion
 
   render() {
     const { isBtcLoading, sellBtc, purchaseBtc, offset } = this.props;

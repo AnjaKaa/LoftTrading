@@ -8,6 +8,7 @@ import {
 } from '../../ducks/currency';
 import styled from 'styled-components';
 
+//#region styles
 const TradeOperationsContainer = styled.article`
   padding-top: 40px;
 `;
@@ -58,6 +59,7 @@ const TradeOperationsButtonPurchase = TradeOperationsButton.extend`
     background-color: #63acd5;
   }
 `;
+//#endregion
 
 class TradeOperation extends Component {
   render() {

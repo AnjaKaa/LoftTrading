@@ -3,25 +3,33 @@ import { Switch, Route } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
 //import PrivateRoute from '../PrivateRoute';
 import Background from '../Background';
+import Header from '../Header';
+import Footer from '../Footer';
 import Trade from '../Trade';
 
 import styled from 'styled-components';
 
-export const Main = styled.main`
+//#region styles
+const Wrapper = styled.div`
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+`;
+
+const Main = styled.main`
+  flex: 1 0 auto;
   font-family: 'Roboto', 'Arial', sans-serif;
   background-color: #f5f5f6;
-  width: 100%;
-  height: 100%
+
   align-text: center;
   position: relative;
 `;
 
-export const WrapCenter = styled.div`
+const WrapCenter = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 100vh;
   margin: 0 auto;
   position: relative;
   width: 1200px;
@@ -29,18 +37,24 @@ export const WrapCenter = styled.div`
   background-color: #ffffff;
 `;
 
+//#endregion
+
 class AppRouter extends Component {
   render() {
     return (
-      <Main>
-        <Background />
-        <WrapCenter>
-          <Switch>
-            <Route path="/trade/btc" exact component={Trade} />
-            <Redirect to="/trade/btc" />
-          </Switch>
-        </WrapCenter>
-      </Main>
+      <Wrapper>
+        <Header />
+        <Main>
+          <Background />
+          <WrapCenter>
+            <Switch>
+              <Route path="/trade/btc" exact component={Trade} />
+              <Redirect to="/trade/btc" />
+            </Switch>
+          </WrapCenter>
+        </Main>
+        <Footer />
+      </Wrapper>
     );
   }
 }

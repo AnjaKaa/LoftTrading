@@ -3,6 +3,7 @@ import TradeChart from './TradeChart';
 import TradeOperatios from './TradeOperations';
 import styled from 'styled-components';
 
+//#region styles
 const TradePageContainer = styled.article`
   display: flex;
   flex-wrap: wrap;
@@ -11,6 +12,7 @@ const TradePageContainer = styled.article`
   background-color: #ffffff;
   padding: 20px 10px 10px 20px;
 `;
+//#endregion
 
 class Trade extends Component {
   state = {};
