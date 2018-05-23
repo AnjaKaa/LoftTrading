@@ -9,6 +9,28 @@ import Trade from '../Trade';
 
 import styled from 'styled-components';
 
+class AppRouter extends Component {
+  render() {
+    return (
+      <Wrapper>
+        <Header />
+        <Main>
+          <Background />
+          <WrapCenter>
+            <Switch>
+              <Route path="/trade/btc" exact component={Trade} />
+              <Redirect to="/trade/btc" />
+            </Switch>
+          </WrapCenter>
+        </Main>
+        <Footer />
+      </Wrapper>
+    );
+  }
+}
+
+export default AppRouter;
+
 //#region styles
 const Wrapper = styled.div`
   height: 100vh;
@@ -38,25 +60,3 @@ const WrapCenter = styled.div`
 `;
 
 //#endregion
-
-class AppRouter extends Component {
-  render() {
-    return (
-      <Wrapper>
-        <Header />
-        <Main>
-          <Background />
-          <WrapCenter>
-            <Switch>
-              <Route path="/trade/btc" exact component={Trade} />
-              <Redirect to="/trade/btc" />
-            </Switch>
-          </WrapCenter>
-        </Main>
-        <Footer />
-      </Wrapper>
-    );
-  }
-}
-
-export default AppRouter;

@@ -1,7 +1,26 @@
 import React, { Component } from 'react';
 import TradeChart from './TradeChart';
 import TradeOperatios from './TradeOperations';
+import Wallet from '../Wallet';
 import styled from 'styled-components';
+
+class Trade extends Component {
+  state = {};
+
+  render() {
+    return (
+      <TradePageContainer>
+        <div>
+          <Wallet />
+          <TradeOperatios />
+        </div>
+        <TradeChart />
+      </TradePageContainer>
+    );
+  }
+}
+
+export default Trade;
 
 //#region styles
 const TradePageContainer = styled.article`
@@ -13,18 +32,3 @@ const TradePageContainer = styled.article`
   padding: 20px 10px 10px 20px;
 `;
 //#endregion
-
-class Trade extends Component {
-  state = {};
-
-  render() {
-    return (
-      <TradePageContainer>
-        <TradeOperatios />
-        <TradeChart />
-      </TradePageContainer>
-    );
-  }
-}
-
-export default Trade;

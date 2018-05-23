@@ -5,64 +5,6 @@ import imgLogo from '../../assets/Logo-white.svg';
 
 import styled from 'styled-components';
 
-//#region styles
-
-export const Logo = styled.img`
-  width: 140px;
-  height: 80px;
-`;
-
-export const Container = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  max-width: 1240px;
-`;
-
-export const FooterWrap = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  max-height: 100px;
-  background-color: #1e2021;
-
-  nav {
-    ul {
-      display: flex;
-      justify-content: center;
-      min-width: 800px;
-      list-style: none;
-      font-size: 18px;
-      color: #ffffff;
-
-      li {
-        position: relative;
-        display: block;
-        margin-right: 20px;
-        float: left;
-
-        a {
-          text-decoration: none;
-          color: #ffffff;
-        }
-      }
-    }
-  }
-`;
-
-export const FooterTitle = styled.div`
-  width: 250px;
-  padding: 20px;
-  font-size: 14px;
-  color: #ffffff;
-  a {
-    text-decoration: none;
-    color: #ffffff;
-  }
-`;
-
-//#endregion
-
 class Footer extends Component {
   render() {
     return (
@@ -102,3 +44,61 @@ class Footer extends Component {
 }
 
 export default Footer;
+
+//#region styles
+
+const Logo = styled.img`
+  width: 140px;
+  height: 80px;
+`;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  max-width: 1240px;
+`;
+
+const FooterWrap = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-height: 100px;
+  background-color: #1e2021;
+
+  nav {
+    ul {
+      display: flex;
+      justify-content: center;
+      min-width: 800px;
+      list-style: none;
+      font-size: 18px;
+      color: #ffffff;
+
+      li {
+        position: relative;
+        display: block;
+        margin-right: 20px;
+        float: left;
+
+        a {
+          text-decoration: none;
+          color: #ffffff;
+        }
+      }
+    }
+  }
+`;
+
+const FooterTitle = styled.div`
+  width: 250px;
+  padding: 20px;
+  font-size: 14px;
+  color: #ffffff;
+  a {
+    text-decoration: none;
+    color: #ffffff;
+  }
+`;
+
+//#endregion

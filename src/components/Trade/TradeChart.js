@@ -18,56 +18,6 @@ import {
 } from '../../ducks/currency';
 import styled from 'styled-components';
 
-//#region styles
-const TradeChartButtons = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  background-color: #edf0f1;
-  padding-top: 10px;
-  padding-bottom: 10px;
-`;
-
-const TradeChartButton = styled.button`
-  margin: 0 4px;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-  background-color: ${props => (props.active ? '#4db6e2' : 'transparent')};
-  color: ${props => (props.active ? '#ffffff' : '#9998a1')};
-  padding: 2px 16px;
-`;
-
-const TradeChartTableSection = styled.section`
-  display: flex;
-  flex-direction: column;
-  min-width: 750px;
-  min-height: 450px;
-  margin-top: 15px;
-  border: 1px solid #edf0f1;
-`;
-
-const WrapSpinner = styled.div`
-  display: flex;
-  flex-direction: column;
-  min-width: 750px;
-  min-height: 400px;
-  justify-content: center;
-  align-items: center;
-
-  p {
-    margin: 40px 0 0 50px;
-    color: #4db6e2;
-  }
-`;
-
-const offsets = {
-  '1h': '1час',
-  '4h': '4часа',
-  '8h': '8часов',
-  '1d': 'день',
-  '7d': 'неделя',
-};
-
 class TradeChart extends Component {
   state = {
     inputFiat: 0,
@@ -75,8 +25,6 @@ class TradeChart extends Component {
     inputPurchase: 0,
     currentOffset: '4h',
   };
-  //#endregion
-
   render() {
     const { isBtcLoading, sellBtc, purchaseBtc, offset } = this.props;
     const sellArr = sellBtc ? sellBtc : [];
@@ -161,3 +109,55 @@ const mapDispatchToProps = {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TradeChart);
+
+//#region styles
+const TradeChartButtons = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  background-color: #edf0f1;
+  padding-top: 10px;
+  padding-bottom: 10px;
+`;
+
+const TradeChartButton = styled.button`
+  margin: 0 4px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  background-color: ${props => (props.active ? '#4db6e2' : 'transparent')};
+  color: ${props => (props.active ? '#ffffff' : '#9998a1')};
+  padding: 2px 16px;
+`;
+
+const TradeChartTableSection = styled.section`
+  display: flex;
+  flex-direction: column;
+  min-width: 750px;
+  min-height: 450px;
+  margin-top: 15px;
+  border: 1px solid #edf0f1;
+`;
+
+const WrapSpinner = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-width: 750px;
+  min-height: 400px;
+  justify-content: center;
+  align-items: center;
+
+  p {
+    margin: 40px 0 0 50px;
+    color: #4db6e2;
+  }
+`;
+
+const offsets = {
+  '1h': '1час',
+  '4h': '4часа',
+  '8h': '8часов',
+  '1d': 'день',
+  '7d': 'неделя',
+};
+
+//#endregion

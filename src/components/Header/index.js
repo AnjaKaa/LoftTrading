@@ -6,18 +6,61 @@ import imgLogo from '../../assets/Logo-white.svg';
 
 import styled from 'styled-components';
 
+class Header extends Component {
+  state = {
+    btc: 0,
+    eth: 0,
+  };
+
+  render() {
+    let title = '';
+    switch (this.props.location.pathname) {
+      case '/trade/btc':
+        title = 'Торги';
+        break;
+      default:
+        title = '';
+        break;
+    }
+
+    return (
+      <HeaderWrap>
+        <Container>
+          <Link to="/">
+            <Logo src={imgLogo} alt="logo-header" />
+          </Link>
+          <HeaderTitle> {title} </HeaderTitle>
+
+          <CurrencyLink>
+            <span>{this.state.btc}</span>
+            <b>1 BTC </b>
+          </CurrencyLink>
+
+          <CurrencyLink>
+            <span>{this.state.eth}</span>
+            <b>1 ETH </b>
+          </CurrencyLink>
+          <UserBlock />
+        </Container>
+      </HeaderWrap>
+    );
+  }
+}
+
+export default withRouter(Header);
+
 //#region styles
-export const Container = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
   max-width: 1240px;
 `;
-export const Logo = styled.img`
+const Logo = styled.img`
   width: 140px;
   height: 80px;
 `;
-export const HeaderWrap = styled.div`
+const HeaderWrap = styled.div`
   display: flex;
   flex: 0 0 auto;
   justify-content: center;
@@ -25,7 +68,7 @@ export const HeaderWrap = styled.div`
   max-height: 80px;
   background-color: #2a2c2e;
 `;
-export const HeaderTitle = styled.div`
+const HeaderTitle = styled.div`
   width: 250px;
   max-height: 28px;
   padding: 32px 20px;
@@ -34,14 +77,14 @@ export const HeaderTitle = styled.div`
   color: #61dafb;
 `;
 
-export const HeaderStatisticsBlock = styled.div`
+const HeaderStatisticsBlock = styled.div`
   width: 140px;
   height: 80px;
   margin: 20px 10px;
   color: #ffffff;
 `;
 
-export const CurrencyLink = styled.a`
+const CurrencyLink = styled.a`
   width: 140px;
   height: 80px;
   display: flex;
@@ -59,7 +102,7 @@ export const CurrencyLink = styled.a`
   }
 `;
 
-export const UserBlock = styled.div`
+const UserBlock = styled.div`
   display: flex;
   justify-content: space-between;
   width: 500px;
@@ -67,7 +110,7 @@ export const UserBlock = styled.div`
   padding: 20px 0;
 `;
 
-export const UserBlockItem = styled.div`
+const UserBlockItem = styled.div`
   position: relative;
   color: #ffffff;
   padding: 0 20px;
@@ -98,7 +141,7 @@ export const UserBlockItem = styled.div`
     color: #ffffff;
   }
 `;
-export const CountNewFeeds = styled.div`
+const CountNewFeeds = styled.div`
   position: absolute;
   top:-10px;
   right: -10px;
@@ -110,36 +153,3 @@ export const CountNewFeeds = styled.div`
 `;
 
 //#endregion
-
-class Header extends Component {
-  state = {
-    btc: 0,
-    eth: 0,
-  };
-
-  render() {
-    return (
-      <HeaderWrap>
-        <Container>
-          <Link to="/">
-            <Logo src={imgLogo} alt="logo-header" />
-          </Link>
-          <HeaderTitle> Название </HeaderTitle>
-
-          <CurrencyLink>
-            <span>{this.state.btc}</span>
-            <b>1 BTC </b>
-          </CurrencyLink>
-
-          <CurrencyLink>
-            <span>{this.state.eth}</span>
-            <b>1 ETH </b>
-          </CurrencyLink>
-          <UserBlock />
-        </Container>
-      </HeaderWrap>
-    );
-  }
-}
-
-export default Header;

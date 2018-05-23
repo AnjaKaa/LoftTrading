@@ -5,73 +5,11 @@ import {
   sellCurrencyRequest,
   getCurrentBtcPurchase,
   getCurrentBtcSell,
+  getSelected,
 } from '../../ducks/currency';
 import styled from 'styled-components';
 
-//#region styles
-const TradeOperationsContainer = styled.article`
-  padding-top: 40px;
-`;
-const TradeOperationsInputWrapper = styled.div`
-  background-color: #f2f2f2;
-  border-radius: 4px;
-  display: inline-block;
-  position: relative;
-  margin: 5px 0;
-  width: 218px;
-`;
-const TradeOperationsInput = styled.input`
-  background-color: transparent;
-  border: none;
-  text-align: right;
-  width: 100%;
-  padding: 5px 0 3px;
-  padding-right: 50px;
-  box-sizing: border-box;
-`;
-const TradeOperationsCurrency = styled.span`
-  position: absolute;
-  right: 8px;
-  width: 38px;
-  text-align: left;
-  color: #adadad;
-  top: 5px;
-`;
-
-const TradeOperationsButton = styled.button`
-  width: 100px;
-  margin-left: 20px;
-  border: 0;
-  color: #fff;
-  padding: 5px 0 3px;
-  border-radius: 3px;
-`;
-
-const TradeOperationsButtonSell = TradeOperationsButton.extend`
-  background-color: #cb5f58;
-  &:hover {
-    background-color: #ba564f;
-  }
-`;
-const TradeOperationsButtonPurchase = TradeOperationsButton.extend`
-  background-color: #69b3dc;
-  &:hover {
-    background-color: #63acd5;
-  }
-`;
-//#endregion
-
-class TradeOperation extends Component {
-  render() {
-    const { name, currency, value, handleChange } = this.props;
-    return (
-      <TradeOperationsInputWrapper>
-        <TradeOperationsInput onChange={handleChange} name={name} value={value} />
-        <TradeOperationsCurrency>{currency.toUpperCase()}</TradeOperationsCurrency>
-      </TradeOperationsInputWrapper>
-    );
-  }
-}
+import TradeOperation from './TradeOperation';
 
 class TradeOperations extends Component {
   state = {
@@ -100,9 +38,7 @@ class TradeOperations extends Component {
             value={inputPurchase}
             handleChange={this.handleChange}
           />
-          <TradeOperationsButtonSell className="redBtn" onClick={this.handleSell}>
-            Продать
-          </TradeOperationsButtonSell>
+          <TradeOperationsButtonSell onClick={this.handleSell}>Продать</TradeOperationsButtonSell>
         </div>
         <div>
           <TradeOperation
@@ -119,11 +55,16 @@ class TradeOperations extends Component {
     );
   }
 
-  handleSell = event => {
-    console.log('handleSell');
+  handleBuy = () => {
+    const { currencyName } = this.props;
+    const { inputFiat } = this.state;
+    this.props.buyCurrencyRequest({ currencyName, value: inputFiat });
   };
-  handleBuy = event => {
-    console.log('handleBuy');
+
+  handleSell = () => {
+    const { currencyName } = this.props;
+    const { inputFiat } = this.state;
+    this.props.sellCurrencyRequest({ currencyName, value: inputFiat });
   };
 
   handleChange = event => {
@@ -174,6 +115,7 @@ class TradeOperations extends Component {
 const mapStateToProps = state => ({
   sell: getCurrentBtcSell(state),
   purchase: getCurrentBtcPurchase(state),
+  currencyName: getSelected(state),
 });
 
 const mapDispatchToProps = {
@@ -182,3 +124,31 @@ const mapDispatchToProps = {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TradeOperations);
+
+//#region styles
+const TradeOperationsContainer = styled.article`
+  padding-top: 40px;
+`;
+
+const TradeOperationsButton = styled.button`
+  width: 100px;
+  margin-left: 20px;
+  border: 0;
+  color: #fff;
+  padding: 5px 0 3px;
+  border-radius: 3px;
+`;
+
+const TradeOperationsButtonSell = TradeOperationsButton.extend`
+  background-color: #cb5f58;
+  &:hover {
+    background-color: #ba564f;
+  }
+`;
+const TradeOperationsButtonPurchase = TradeOperationsButton.extend`
+  background-color: #69b3dc;
+  &:hover {
+    background-color: #63acd5;
+  }
+`;
+//#endregion

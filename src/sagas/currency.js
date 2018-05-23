@@ -9,7 +9,8 @@ import {
   fetchBtcFailure,
   selectOffset,
 } from '../ducks/currency';
-import { candles } from '../api';
+import { fetchWalletRequest, fetchWalletSuccess, fetchWalletFailure } from '../ducks/wallet';
+import { candles, getWallet } from '../api';
 
 function* fetchBtcFlow(action) {
   try {
@@ -44,4 +45,17 @@ export function* currencyWatch() {
 
 export function* fetchBtcWatch() {
   yield takeLatest(fetchBtcRequest, fetchBtcFlow);
+}
+
+function* fetchWalletFlow() {
+  try {
+    const response = yield call(getWallet);
+    yield put(fetchWalletSuccess(response.data.result));
+  } catch (error) {
+    yield put(fetchWalletFailure(error));
+  }
+}
+
+export function* fetchWalletWatch() {
+  yield takeLatest(fetchWalletRequest, fetchWalletFlow);
 }
