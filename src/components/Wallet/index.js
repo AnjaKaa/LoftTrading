@@ -13,70 +13,18 @@ import { sellCurrencyRequest } from '../../ducks/currency';
 import styled from 'styled-components';
 
 class Wallet extends Component {
-  state = {
-    btc: 0,
-    eth: 0,
-    usd: 0,
-  };
   componentDidMount() {
     this.props.fetchWalletRequest();
-    const { walletUsd, walletBtc, walletEth } = this.props;
-    this.setState({
-      btc: walletBtc,
-      eth: walletEth,
-      usd: walletUsd,
-    });
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { walletUsd, walletBtc, walletEth } = nextProps;
-
-    this.setState({
-      btc: walletBtc,
-      eth: walletEth,
-      usd: walletUsd,
-    });
   }
 
   render() {
-    const { btc, eth, usd } = this.state;
-    //console.log('wallet', this.props);
+    const { walletUsd, walletBtc, walletEth } = this.props;
+
     return (
       <Fragment>
-        <span>{this.props.btc}</span>
-        <CoinInputContainer>
-          <CoinInputInput>
-            <CoinInputInteger textAlign="right">{Math.round(Math.floor(eth))}</CoinInputInteger>.
-            <CoinInputFraction>
-              {String(eth - Math.floor(eth))
-                .replace('0.', '')
-                .slice(0, 8)}
-            </CoinInputFraction>
-          </CoinInputInput>
-          <CoinInputCurrency>ETH</CoinInputCurrency>
-        </CoinInputContainer>
-        <CoinInputContainer>
-          <CoinInputInput>
-            <CoinInputInteger textAlign="right">{Math.round(Math.floor(btc))}</CoinInputInteger>.
-            <CoinInputFraction>
-              {String(btc - Math.floor(btc))
-                .replace('0.', '')
-                .slice(0, 8)}
-            </CoinInputFraction>
-          </CoinInputInput>
-          <CoinInputCurrency>BTC</CoinInputCurrency>
-        </CoinInputContainer>
-        <CoinInputContainer>
-          <CoinInputInput>
-            <CoinInputInteger textAlign="right">{Math.round(Math.floor(usd))}.</CoinInputInteger>
-            <CoinInputFraction>
-              {String(usd - Math.floor(usd))
-                .replace('0.', '')
-                .slice(0, 8)}
-            </CoinInputFraction>
-          </CoinInputInput>
-          <CoinInputCurrency>$</CoinInputCurrency>
-        </CoinInputContainer>
+        <CoinInput coinValue={walletEth} coinName="ETH" />
+        <CoinInput coinValue={walletBtc} coinName="BTC" />
+        <CoinInput coinValue={walletUsd} coinName="$" />
       </Fragment>
     );
   }
@@ -95,6 +43,22 @@ const mapDispatchToProps = {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
+
+const CoinInput = props => {
+  return (
+    <CoinInputContainer>
+      <CoinInputInput>
+        <CoinInputInteger>{Math.round(Math.floor(props.coinValue))}</CoinInputInteger>.
+        <CoinInputFraction>
+          {String(props.coinValue - Math.floor(props.coinValue))
+            .replace('0.', '')
+            .slice(0, 8)}
+        </CoinInputFraction>
+      </CoinInputInput>
+      <CoinInputCurrency>{props.coinName}</CoinInputCurrency>
+    </CoinInputContainer>
+  );
+};
 
 //#region styles
 const CoinInputContainer = styled.div`

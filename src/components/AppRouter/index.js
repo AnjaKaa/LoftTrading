@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
-//import PrivateRoute from '../PrivateRoute';
+import PrivateRoute from '../PrivateRoute';
 import Background from '../Background';
+import Login from '../Login';
 import Header from '../Header';
 import Footer from '../Footer';
 import Trade from '../Trade';
@@ -18,7 +19,8 @@ class AppRouter extends Component {
           <Background />
           <WrapCenter>
             <Switch>
-              <Route path="/trade/btc" exact component={Trade} />
+              <Route path="/login" exact component={Login} />
+              <PrivateRoute path="/trade/btc" exact component={Trade} />
               <Redirect to="/trade/btc" />
             </Switch>
           </WrapCenter>
@@ -48,15 +50,14 @@ const Main = styled.main`
 `;
 
 const WrapCenter = styled.div`
-  align-items: center;
   display: flex;
+  align-items: center;
   flex-direction: column;
   justify-content: center;
   margin: 0 auto;
   position: relative;
-  width: 1200px;
+  max-width: 1200px;
   z-index: 1;
-  background-color: #ffffff;
 `;
 
 //#endregion
