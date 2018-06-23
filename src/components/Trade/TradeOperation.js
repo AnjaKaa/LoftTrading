@@ -6,7 +6,7 @@ class TradeOperation extends Component {
     const { name, currency, value, handleChange } = this.props;
     return (
       <TradeOperationsInputWrapper>
-        <TradeOperationsInput onChange={handleChange} name={name} value={value} />
+        <TradeOperationsInput onChange={handleChange} name={name} value={value || 0} />
         <TradeOperationsCurrency>{currency.toUpperCase()}</TradeOperationsCurrency>
       </TradeOperationsInputWrapper>
     );

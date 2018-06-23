@@ -6,13 +6,12 @@ import { PropagateLoader } from 'react-spinners';
 
 import {
   getIsBtcLoading,
-  buyCurrencyRequest,
-  sellCurrencyRequest,
-  getCurrentBtcPurchase,
-  getCurrentBtcSell,
+  getIsEthLoading,
   getSelected,
   sellBtc,
   purchaseBtc,
+  sellEth,
+  purchaseEth,
   getOffset,
   selectOffset,
 } from '../../ducks/currency';
@@ -26,10 +25,20 @@ class TradeChart extends Component {
     currentOffset: '4h',
   };
   render() {
-    const { isBtcLoading, sellBtc, purchaseBtc, offset } = this.props;
-    const sellArr = sellBtc ? sellBtc : [];
-    const purchaseArr = purchaseBtc ? purchaseBtc : [];
-
+    const {
+      currencyName,
+      isBtcLoading,
+      isEthLoading,
+      sellBtc,
+      sellEth,
+      purchaseBtc,
+      purchaseEth,
+      offset,
+    } = this.props;
+    const sellArr = currencyName === 'btc' ? (sellBtc ? sellBtc : []) : sellEth ? sellEth : [];
+    const purchaseArr =
+      currencyName === 'btc' ? (purchaseBtc ? purchaseBtc : []) : purchaseEth ? purchaseEth : [];
+    const isLoading = currencyName === 'btc' ? isBtcLoading : isEthLoading;
     return (
       <div>
         <h4>Окно графика</h4>
@@ -46,7 +55,7 @@ class TradeChart extends Component {
               </TradeChartButton>
             ))}
           </TradeChartButtons>
-          {isBtcLoading ? (
+          {isLoading ? (
             <WrapSpinner>
               <PropagateLoader size={40} color={'#4db6e2'} loading={true} />
               <p>Загрузка гафика</p>
@@ -92,23 +101,23 @@ class TradeChart extends Component {
 
 const mapStateToProps = state => ({
   isBtcLoading: getIsBtcLoading(state),
-
-  sell: getCurrentBtcSell(state),
-  purchase: getCurrentBtcPurchase(state),
+  isEthLoading: getIsEthLoading(state),
   sellBtc: sellBtc(state),
-
+  sellEth: sellEth(state),
   purchaseBtc: purchaseBtc(state),
+  purchaseEth: purchaseEth(state),
   currencyName: getSelected(state),
   offset: getOffset(state),
 });
 
 const mapDispatchToProps = {
-  buyCurrencyRequest,
-  sellCurrencyRequest,
   selectOffset,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TradeChart);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(TradeChart);
 
 //#region styles
 const TradeChartButtons = styled.div`

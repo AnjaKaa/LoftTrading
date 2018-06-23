@@ -1,21 +1,32 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
+import {
+  selectBtc,
+  selectEth,
+  getCurrentBtcSell,
+  getCurrentEthSell,
+  getSelected,
+} from '../../ducks/currency';
 
 import imgLogo from '../../assets/Logo-white.svg';
 
 import styled from 'styled-components';
 
 class Header extends Component {
-  state = {
-    btc: 0,
-    eth: 0,
-  };
+  componentDidMount() {
+    this.setCurrency(this.props.location.pathname.replace('/trade/', ''));
+  }
 
   render() {
+    const { eth, btc, currencyName } = this.props;
     let title = '';
+
     switch (this.props.location.pathname) {
       case '/trade/btc':
+        title = 'Торги';
+        break;
+      case '/trade/eth':
         title = 'Торги';
         break;
       default:
@@ -31,13 +42,25 @@ class Header extends Component {
           </Link>
           <HeaderTitle> {title} </HeaderTitle>
 
-          <CurrencyLink>
-            <span>{this.state.btc}</span>
+          <CurrencyLink
+            className={currencyName === 'btc' ? 'active' : null}
+            onClick={() => {
+              this.setCurrency('btc');
+            }}
+            to="/trade/btc"
+          >
+            <span>${btc.toFixed(2)}</span>
             <b>1 BTC </b>
           </CurrencyLink>
 
-          <CurrencyLink>
-            <span>{this.state.eth}</span>
+          <CurrencyLink
+            className={currencyName === 'eth' ? 'active' : null}
+            onClick={() => {
+              this.setCurrency('eth');
+            }}
+            to="/trade/eth"
+          >
+            <span>${eth.toFixed(2)}</span>
             <b>1 ETH </b>
           </CurrencyLink>
           <UserBlock />
@@ -45,9 +68,34 @@ class Header extends Component {
       </HeaderWrap>
     );
   }
+
+  setCurrency = link => {
+    const { selectBtc, selectEth } = this.props;
+    if (link === 'btc') {
+      selectBtc();
+    } else if (link === 'eth') {
+      selectEth();
+    }
+  };
 }
 
-export default withRouter(Header);
+const mapStateProps = state => ({
+  btc: getCurrentBtcSell(state),
+  eth: getCurrentEthSell(state),
+  currencyName: getSelected(state),
+});
+
+const mapDispatchToProps = {
+  selectBtc,
+  selectEth,
+};
+
+export default withRouter(
+  connect(
+    mapStateProps,
+    mapDispatchToProps,
+  )(Header),
+);
 
 //#region styles
 const Container = styled.div`
@@ -84,7 +132,7 @@ const HeaderStatisticsBlock = styled.div`
   color: #ffffff;
 `;
 
-const CurrencyLink = styled.a`
+const CurrencyLink = styled(Link)`
   width: 140px;
   height: 80px;
   display: flex;

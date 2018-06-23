@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import TradeChart from './TradeChart';
 import TradeOperatios from './TradeOperations';
 import Wallet from '../Wallet';
+import TradeTable from './TradeTable';
 import styled from 'styled-components';
 
 class Trade extends Component {
@@ -14,7 +15,10 @@ class Trade extends Component {
           <Wallet />
           <TradeOperatios />
         </div>
-        <TradeChart />
+        <div>
+          <TradeChart />
+          <TradeTable />
+        </div>
       </TradePageContainer>
     );
   }

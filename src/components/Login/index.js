@@ -18,26 +18,6 @@ class Login extends PureComponent {
     password: '',
   };
 
-  toggleMode = event => {
-    event.preventDefault();
-    this.setState({ mode: event.target.name === 'login' ? 'registration' : 'login' });
-  };
-
-  handleInputchange = event => {
-    this.setState({
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  handleSubmit = values => {
-    const { mode } = this.state;
-    if (mode === 'login') {
-      this.props.authRequest(values);
-    } else {
-      this.props.regRequest(values);
-    }
-  };
-
   render() {
     const { isAuthorize } = this.props;
     const { mode } = this.state;
@@ -98,6 +78,27 @@ class Login extends PureComponent {
       );
     }
   }
+  toggleMode = event => {
+    event.preventDefault();
+    this.setState({ mode: event.target.name === 'login' ? 'registration' : 'login' });
+  };
+
+  handleInputchange = event => {
+    this.setState({
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  handleSubmit = values => {
+    const { mode } = this.state;
+    if (mode === 'login') {
+      this.props.authRequest(values);
+    } else {
+      this.props.regRequest(values);
+    }
+  };
+
+  
 }
 
 export default connect(

@@ -20,7 +20,7 @@ class AppRouter extends Component {
           <WrapCenter>
             <Switch>
               <Route path="/login" exact component={Login} />
-              <PrivateRoute path="/trade/btc" exact component={Trade} />
+              <PrivateRoute path="/trade/:currency" exact component={Trade} />
               <Redirect to="/trade/btc" />
             </Switch>
           </WrapCenter>

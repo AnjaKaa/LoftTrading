@@ -4,9 +4,13 @@ import { authSuccess, logout } from '../ducks/auth';
 import { getOffset } from '../ducks/currency';
 import {
   selectBtc,
+  selectEth,
   fetchBtcRequest,
   fetchBtcSuccess,
   fetchBtcFailure,
+  fetchEthRequest,
+  fetchEthSuccess,
+  fetchEthFailure,
   selectOffset,
 } from '../ducks/currency';
 import { fetchWalletRequest, fetchWalletSuccess, fetchWalletFailure } from '../ducks/wallet';
@@ -21,11 +25,20 @@ function* fetchBtcFlow(action) {
   }
 }
 
+function* fetchEthFlow(action) {
+  try {
+    const response = yield call(candles, 'eth', action.payload);
+    yield put(fetchEthSuccess(response.data.result));
+  } catch (error) {
+    yield put(fetchEthFailure(error));
+  }
+}
+
 function* loginCurrencyFlow() {
   while (true) {
     const offset = yield select(getOffset);
     yield put(fetchBtcRequest(offset));
-
+    yield put(fetchEthRequest(offset));
     yield delay(15000);
   }
 }
@@ -33,7 +46,7 @@ function* loginCurrencyFlow() {
 export function* currencyWatch() {
   let currencyTask;
   while (true) {
-    const action = yield take([authSuccess, logout, selectBtc, selectOffset]);
+    const action = yield take([authSuccess, logout, selectBtc, selectEth, selectOffset]);
 
     if (currencyTask) {
       yield cancel(currencyTask);
@@ -45,6 +58,10 @@ export function* currencyWatch() {
 
 export function* fetchBtcWatch() {
   yield takeLatest(fetchBtcRequest, fetchBtcFlow);
+}
+
+export function* fetchEthWatch() {
+  yield takeLatest(fetchEthRequest, fetchEthFlow);
 }
 
 function* fetchWalletFlow() {
